@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/10/29 14:32:00 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/10/29 22:17:52 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ char	*ft_strchr(const char *s, int c)
 static char	*get_one_line(char **save, size_t len)
 {
 	char	*ret;
-	char	*pt;
 
-	ret = (char *)malloc(sizeof(char) * (len + 1));
-	pt = ret;
 	if (**save == '\0')
+		return (NULL);
+	ret = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ret)
 		return (NULL);
 	ft_strlcpy(ret, *save, len + 1);
 	*save += len + 1;
@@ -83,7 +83,7 @@ char	*get_next_line(int fd)
 	char		*buff;
 	int			read_bytes;
 
-	if (0 < fd || fd >= FOPEN_MAX || BUFFER_SIZE <= 0)
+	if (fd < 0 || FOPEN_MAX <= fd|| BUFFER_SIZE <= 0)
 		return (NULL);
 	if (save[fd] && ft_strchr(save[fd], '\n'))
 		return (get_one_line(&save[fd], ft_strchr(save[fd], '\n') - save[fd] + 1));
@@ -114,30 +114,33 @@ char	*get_next_line(int fd)
 #include <errno.h>
 #include <string.h>
 
-// int	main(void)
-// {
-//     int 	fd;
-// 	// int		fd02;
-//     char 	*buff;
-//     // char 	*buff02;
+int	main(void)
+{
+    int 	fd;
+	// int		fd02;
+    char 	*buff;
+    // char 	*buff02;
 
-//     if ((fd = open("sample4.txt", O_RDONLY)) == -1)
-//     {
-// 		printf("fopen error(%s)\n", strerror(errno));
-//         return (0);
-//     }
-// 	fd = 0;
-//     // if ((fd02 = open("sample5.txt", O_RDONLY)) == -1)
-//     // {
-// 	// 	printf("fopen error(%s)\n", strerror(errno));
-//     //     return (0);
-//     // }
-// 	while ((buff = get_next_line(fd)))
-//     {
-// 		printf("answer:%s\n", buff);
-// 		// printf("answer:%s\n", buff02);
-//     }
-//     close(fd);
-// 	// system("leaks a.out"); // メモリリークチェック
-//     return (0);
-// }
+    if ((fd = open("sample1.txt", O_RDONLY)) == -1)
+    {
+		printf("fopen error(%s)\n", strerror(errno));
+        return (0);
+    }
+	// fd = 0;
+    // if ((fd02 = open("sample5.txt", O_RDONLY)) == -1)
+    // {
+	// 	printf("fopen error(%s)\n", strerror(errno));
+    //     return (0);
+    // }
+	printf("%d\n", FOPEN_MAX);
+	while (1)
+    {
+		buff = get_next_line(fd);
+		printf("answer:%s\n", buff);
+		// printf("answer:%s\n", buff02);
+		break;
+    }
+    close(fd);
+	// system("leaks a.out"); // メモリリークチェック
+    return (0);
+}
