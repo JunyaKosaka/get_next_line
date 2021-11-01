@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:09:08 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/10/31 18:42:14 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/01 15:20:03 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strdup(const char *s1)
 	return (ret);
 }
 
-char	*join_words(char const *s1, char const *s2)
+char	*join_words(char *s1, char *s2)
 {
 	char	*ret;
 	size_t	size;
@@ -64,8 +64,10 @@ char	*join_words(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(ret, s1, ft_strlen(s1) + 1);
 	ft_strlcpy(ret + ft_strlen(s1), s2, size + 1);
-	// printf("++%s%s%s--\n", ret, s1, s2);
 	if (s1 != s2 && s1 != ret)
-		free((char *)s1);
+	{
+		free(s1); // char * を消すか確認
+		s1 = NULL;
+	}
 	return (ret);
 }

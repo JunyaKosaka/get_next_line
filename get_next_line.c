@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/10/31 18:45:38 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/01 15:19:08by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strchr(const char *s, int c)
 static char	*get_one_line(char **save, size_t len)
 {
 	char	*ret;
-	char	*new;
+	char	*temp;
 
 	if (!len)
 	{
@@ -37,27 +37,29 @@ static char	*get_one_line(char **save, size_t len)
 	if (!ret)
 		return (NULL);
 	ft_strlcpy(ret, *save, len + 1);
-	new = ft_strdup((*save) + len);
+	temp = ft_strdup((*save) + len);
 	free(*save);
-	*save = new;
+	*save = temp;
 	return (ret);
 }
 
-size_t	get_len(const char *s, char c)
+static size_t	get_len(const char *s, char c)
 {
 	return (ft_strchr(s, c) - s + 1);
 }
 
-void	*free_all(char *s1, char *s2)
+static void	*free_all(char *s1, char *s2)
 {
 	free(s1);
 	free(s2);
+	s1 = NULL;
+	s2 = NULL;
 	return (NULL);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*save[FD_MAX];  // = {NULL};
+	static char	*save[FD_MAX];
 	char		*buff;
 	int			read_bytes;
 
@@ -72,24 +74,28 @@ char	*get_next_line(int fd)
 	while (read_bytes && !ft_strchr(save[fd], '\n'))
 	{
 		read_bytes = read(fd, buff, BUFFER_SIZE);
-		if (read_bytes == -1)
+		if (read_bytes == -1 || (!read_bytes && !ft_strlen(save[fd])))  // 0 0 例外処理
+		{
+			printf("error");
 			return (free_all(buff, save[fd]));
+		}
 		buff[read_bytes] = '\0';
 		save[fd] = join_words(save[fd], buff);
 	}
 	free(buff);
+	buff = NULL;
 	if (!read_bytes)
 		return (get_one_line(&save[fd], ft_strlen(save[fd])));
 	return (get_one_line(&save[fd], get_len(save[fd], '\n')));
 }
 
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <stdlib.h>
+// #include <fcntl.h>
+// #include <sys/types.h>
+// #include <sys/uio.h>
+// #include <unistd.h>
+// #include <errno.h>
+// #include <string.h>
+// #include <stdlib.h>
 
 // int	main(void)
 // {
@@ -98,12 +104,12 @@ char	*get_next_line(int fd)
 //     char 	*buff;
 //     // char 	*buff02;
 
-//     if ((fd = open("sample1.txt", O_RDONLY)) == -1)
+//     if ((fd = open("sample6.txt", O_RDONLY)) == -1)
 //     {
 // 		printf("fopen error(%s)\n", strerror(errno));
 //         return (0);
 //     }
-// 	fd = 0;
+// 	// fd = 0;
 //     // if ((fd02 = open("sample5.txt", O_RDONLY)) == -1)
 //     // {
 // 	// 	printf("fopen error(%s)\n", strerror(errno));
