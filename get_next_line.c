@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/01 15:19:08by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/01 17:34:25 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,19 @@ static size_t	get_len(const char *s, char c)
 
 static void	*free_all(char *s1, char *s2)
 {
-	free(s1);
-	free(s2);
-	s1 = NULL;
-	s2 = NULL;
+	printf("----------------\n");
+	printf("size:%zu %zu\n", malloc_size(s1), malloc_size(s2));
+	printf("%p %p\n", s1, s2);
+	if (s1)
+	{
+		free(s1);
+		s1 = NULL;
+	}
+	if (malloc_size(s2))
+	{
+		free(s2);
+		s2 = NULL;
+	}
 	return (NULL);
 }
 
