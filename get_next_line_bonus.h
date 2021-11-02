@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:55:17 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/02 18:33:33 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:50:29 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <malloc/malloc.h>
 # include <stdio.h>
 # include <string.h>
+# include <errno.h>
 # define FD_MAX 256
 
 size_t	ft_strlen(const char *s);
