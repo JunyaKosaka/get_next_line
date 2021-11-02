@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/01 17:34:25 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:27:58 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,19 @@ static char	*get_one_line(char **save, size_t len)
 	char	*ret;
 	char	*temp;
 
-	if (!len)
+	if (!len || !(*save))
 	{
 		free(*save);
+		*save = NULL;
 		return (NULL);
 	}
-	if (!(*save))
-		return (NULL);
 	ret = (char *)malloc(sizeof(char) * (len + 1));
 	if (!ret)
+	{
+		free(*save);
+		*save = NULL;
 		return (NULL);
+	}
 	ft_strlcpy(ret, *save, len + 1);
 	temp = ft_strdup((*save) + len);
 	free(*save);
@@ -48,27 +51,18 @@ static size_t	get_len(const char *s, char c)
 	return (ft_strchr(s, c) - s + 1);
 }
 
-static void	*free_all(char *s1, char *s2)
+static void	*free_all(char **s1, char **s2)
 {
-	printf("----------------\n");
-	printf("size:%zu %zu\n", malloc_size(s1), malloc_size(s2));
-	printf("%p %p\n", s1, s2);
-	if (s1)
-	{
-		free(s1);
-		s1 = NULL;
-	}
-	if (malloc_size(s2))
-	{
-		free(s2);
-		s2 = NULL;
-	}
+	free(*s1);
+	*s1 = NULL;
+	free(*s2);
+	*s2 = NULL;
 	return (NULL);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*save[FD_MAX];
+	static char	*save[FD_MAX] = {NULL};
 	char		*buff;
 	int			read_bytes;
 
@@ -76,20 +70,17 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buff = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (!buff)
-		return (NULL);
+		return (free_all(&save[fd], &buff));
 	if (!save[fd])
 		save[fd] = ft_strdup("");
 	read_bytes = 1;
 	while (read_bytes && !ft_strchr(save[fd], '\n'))
 	{
 		read_bytes = read(fd, buff, BUFFER_SIZE);
-		if (read_bytes == -1 || (!read_bytes && !ft_strlen(save[fd])))  // 0 0 例外処理
-		{
-			printf("error");
-			return (free_all(buff, save[fd]));
-		}
+		if (read_bytes == -1 || (!read_bytes && !ft_strlen(save[fd])))
+			return (free_all(&save[fd], &buff));
 		buff[read_bytes] = '\0';
-		save[fd] = join_words(save[fd], buff);
+		save[fd] = join_words(&save[fd], buff);
 	}
 	free(buff);
 	buff = NULL;
@@ -109,17 +100,17 @@ char	*get_next_line(int fd)
 // int	main(void)
 // {
 //     int 	fd;
-// 	// int		fd02;
+// 	int		fd02;
 //     char 	*buff;
-//     // char 	*buff02;
+//     char 	*buff02;
 
-//     if ((fd = open("sample6.txt", O_RDONLY)) == -1)
+//     if ((fd = open("sample1.txt", O_RDONLY)) == -1)
 //     {
 // 		printf("fopen error(%s)\n", strerror(errno));
 //         return (0);
 //     }
 // 	// fd = 0;
-//     // if ((fd02 = open("sample5.txt", O_RDONLY)) == -1)
+//     // if ((fd02 = open("sample1.txt", O_RDONLY)) == -1)
 //     // {
 // 	// 	printf("fopen error(%s)\n", strerror(errno));
 //     //     return (0);
@@ -128,11 +119,14 @@ char	*get_next_line(int fd)
 //     {
 // 		buff = get_next_line(fd);
 // 		printf("answer:%s", buff);
+// 		// free(buff);
+// 		// buff02 = get_next_line(fd02);
+// 		// printf("answer:%s", buff02);
 // 		if (!buff)
+// 		// if (!buff || !buff02)
 // 			break;
-// 		// printf("answer:%s\n", buff02);
 //     }
 //     close(fd);
-// 	// system("leaks a.out"); // メモリリークチェック
+// 	system("leaks a.out"); // メモリリークチェック
 //     return (0);
 // }
