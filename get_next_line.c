@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/02 18:47:56 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:49:24 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,11 @@ int  main(void)
     char	*buff;
     char	*buff02;
 
-    if ((fd = open("sample1.txt", O_RDONLY)) == -1)
-    {
-        printf("fopen error(%s)\n", strerror(errno));
-        return (0);
-    }
+    // if ((fd = open("sample1.txt", O_RDONLY)) == -1)
+    // {
+    //     printf("fopen error(%s)\n", strerror(errno));
+    //     return (0);
+    // }
     fd = 0;
     // if ((fd02 = open("sample1.txt", O_RDONLY)) == -1)
     // {
