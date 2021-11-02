@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/02 18:37:03 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/02 21:07:31 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	*free_all(char **s1, char **s2)
 
 char	*get_next_line(int fd)
 {
-	static char	*save[FD_MAX] = {NULL};
+	static char	*save[FD_MAX] = {};
 	char		*buff;
 	int			read_bytes;
 
