@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/02 18:35:16 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:37:03 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,45 +88,3 @@ char	*get_next_line(int fd)
 		return (get_one_line(&save[fd], ft_strlen(save[fd])));
 	return (get_one_line(&save[fd], get_len(save[fd], '\n')));
 }
-
-// #include <fcntl.h>
-// #include <sys/types.h>
-// #include <sys/uio.h>
-// #include <unistd.h>
-// #include <errno.h>
-// #include <string.h>
-// #include <stdlib.h>
-
-// int	main(void)
-// {
-//     int 	fd;
-// 	int		fd02;
-//     char 	*buff;
-//     char 	*buff02;
-
-//     if ((fd = open("sample1.txt", O_RDONLY)) == -1)
-//     {
-// 		printf("fopen error(%s)\n", strerror(errno));
-//         return (0);
-//     }
-// 	// fd = 0;
-//     // if ((fd02 = open("sample1.txt", O_RDONLY)) == -1)
-//     // {
-// 	// 	printf("fopen error(%s)\n", strerror(errno));
-//     //     return (0);
-//     // }
-// 	while (1)
-//     {
-// 		buff = get_next_line(fd);
-// 		printf("answer:%s", buff);
-// 		// free(buff);
-// 		// buff02 = get_next_line(fd02);
-// 		// printf("answer:%s", buff02);
-// 		if (!buff)
-// 		// if (!buff || !buff02)
-// 			break;
-//     }
-//     close(fd);
-// 	system("leaks a.out"); // メモリリークチェック
-//     return (0);
-// }
