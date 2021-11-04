@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:55:17 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/02 18:50:29 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/03 20:50:42 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*ft_strdup(const char *s1);
-char	*join_words(char **s1, const char *s2);
+// char	*join_words(char **s1, const char *s2);
 char	*ft_strchr(const char *s, int c);
 char	*get_next_line(int fd);
 
