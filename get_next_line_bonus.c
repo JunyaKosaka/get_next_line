@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/05 16:25:08 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/05 20:55:30 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*get_next_line(int fd)
 {
 	static char	*save[FD_MAX] = {NULL};
 	char		*buff;
-	int			read_bytes;
+	ssize_t		read_bytes;
 
 	if (fd < 0 || FD_MAX <= fd || BUFFER_SIZE <= 0)
 		return (NULL);
