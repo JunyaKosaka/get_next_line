@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:55:17 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/05 16:28:11 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/05 16:30:55 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define FD_MAX 256
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 256
+#  define BUFFER_SIZE 256
 # endif
 
 size_t	ft_strlen(const char *s);
