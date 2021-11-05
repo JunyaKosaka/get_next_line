@@ -6,17 +6,11 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/04 18:16:30 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/05 16:22:41 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-static void	*free_one(char **s)
-{
-	free(*s);
-	return (*s = NULL);
-}
 
 static void	*free_all(char **s1, char **s2)
 {
@@ -52,10 +46,10 @@ static char	*get_one_line(char **save, size_t len)
 	char	*temp;
 
 	if (!len || !(*save))
-		return (free_one(&(*save)));
+		return (free_one(save));
 	ret = (char *)malloc(sizeof(char) * (len + 1));
 	if (!ret)
-		return (free_one(&(*save)));
+		return (free_one(save));
 	ft_strlcpy(ret, *save, len + 1);
 	temp = NULL;
 	if (*((*save) + len))
@@ -63,6 +57,14 @@ static char	*get_one_line(char **save, size_t len)
 	free(*save);
 	*save = temp;
 	return (ret);
+}
+
+static char	*init_save(char *s)
+{
+	if (s)
+		return (s);
+	s = ft_strdup("");
+	return (s);
 }
 
 char	*get_next_line(int fd)
@@ -76,8 +78,7 @@ char	*get_next_line(int fd)
 	buff = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (!buff)
 		return (free_all(&save[fd], &buff));
-	if (!save[fd])
-		save[fd] = ft_strdup("");
+	save[fd] = init_save(save[fd]);
 	read_bytes = 1;
 	while (read_bytes && !ft_strchr(save[fd], '\n'))
 	{
@@ -86,6 +87,8 @@ char	*get_next_line(int fd)
 			return (free_all(&save[fd], &buff));
 		buff[read_bytes] = '\0';
 		save[fd] = join_words(&save[fd], buff);
+		if (!save[fd])
+			return (free_all(&save[fd], &buff));
 	}
 	free_one(&buff);
 	if (!read_bytes)

@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:09:08 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/03 20:49:03 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/05 16:16:00 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,10 @@ char	*ft_strchr(const char *s, int c)
 	if (*s == (char)c)
 		return ((char *)s);
 	return (NULL);
+}
+
+void	*free_one(char **s)
+{
+	free(*s);
+	return (*s = NULL);
 }
