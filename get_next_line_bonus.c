@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 14:05:15 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/05 20:55:30 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/06 17:59:26 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ static char	*get_one_line(char **save, size_t len)
 
 static char	*init_save(char *s)
 {
-	if (s)
-		return (s);
-	s = ft_strdup("");
+	if (!s)
+		s = ft_strdup("");
 	return (s);
 }
 
@@ -88,7 +87,7 @@ char	*get_next_line(int fd)
 		buff[read_bytes] = '\0';
 		save[fd] = join_words(&save[fd], buff);
 		if (!save[fd])
-			return (free_all(&save[fd], &buff));
+			return (free_one(&buff));
 	}
 	free_one(&buff);
 	if (!read_bytes)
