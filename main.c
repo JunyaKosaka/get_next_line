@@ -6,7 +6,7 @@
 /*   By: jkosaka <jkosaka@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 16:32:22 by jkosaka           #+#    #+#             */
-/*   Updated: 2021/11/06 17:54:21 by jkosaka          ###   ########.fr       */
+/*   Updated: 2021/11/06 18:12:35 by jkosaka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,4 @@ int  main(void)
     system("leaks a.out");
     return (0);
 }
+
